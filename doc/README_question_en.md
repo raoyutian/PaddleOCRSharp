@@ -1,11 +1,18 @@
-#### Q： 项目是否支持x86（32位操作系统）
+#### Q： 是否支持多线程调用？
+
+不支持多线程、并发。OCR内部已经有多线程预测机制。
+
+#### Q： 项目是否支持x86？（32位操作系统）
 
 本项目只支持X64位程序;
-如确实需要，请构建64位其他服务模式或者webAPI模式，然后32位程序调用。
+如确实需要，请构建64位其他服务模式或者web模式，然后32位程序调用。
 
-#### Q： WebAPI部署遇到错误：could not execute a primitive
+#### Q： Web IIS部署问题
 
-CPU加速则会遇到，目前官方bug。暂时关闭cpu加速    oCRParameter.Enable_mkldnn = 0;
+部署遇到错误：could not execute a primitive
+CPU加速则会遇到，目前官方bug。关闭cpu加速    oCRParameter.Enable_mkldnn = 0;
+部署IIS情况下需要删除 web.config文件中 hostingModel="inprocess"这段。
+使用IIS调试，需要设置“进程外”模式
 
 
 #### Q：找不到依赖项或无法加载依赖项：PaddleOCR.dll
@@ -18,6 +25,8 @@ CPU加速则会遇到，目前官方bug。暂时关闭cpu加速    oCRParameter.
 |--opencv_world411.dll       //第三方引用库
 |--paddle_inference.dll      //飞桨库
 |--PaddleOCR.dll  
+
+本项目依赖VC++2017X64运行库，请检查机器上是否安装VC++依赖库，2.0.4及以上版本，免安装VC++2017X64运行库
 
 ```
 
@@ -37,6 +46,3 @@ net项目中注意识别完后的图像内存清理。另外，使用CPU加速�
 oCRParameter.Enable_mkldnn = 0
 
 ```
-#### Q： 是否支持多线程调用检测
-
-不支持多线程。OCR内部已经有多线程预测机制。
