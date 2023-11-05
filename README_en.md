@@ -1,21 +1,21 @@
 ##  English |  [简体中文](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/README.md)|[Version update record](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/doc/README_update_en.md)
 
-### If it's useful or enjoyable for you, then give it a star ☆. thank you!
+### If it's useful or enjoyable for you, then give it a star ☆. Thank you!
 
 ### The latest code is  in https://gitee.com/raoyutian/paddle-ocrsharp
 
-## 1、Introduce
+## 1. Introduce
 
 
 This project is a C + + code modification and encapsulation based on  Baidu [PaddleOCR](https://github.com/paddlepaddle/PaddleOCR) Net tool class library. It includes the table recognition function of text recognition, text detection and statistical analysis based on text detection results. At the same time, it is optimized to improve the recognition accuracy in the case of inaccurate small image recognition. It contains ultra lightweight Chinese OCR with a total model of only 8.6M size. The single model supports Chinese and English digit combination recognition, vertical text recognition and long text recognition. Support multiple text detection at the same time.
 
 The project encapsulation is extremely simplified, and the actual call is only a few lines of code, which greatly facilitates the use of middle and downstream developers and reduces the entry level of paddleocr. At the same time, different functions are provided Net framework to facilitate application development and deployment in various industries. Nuget package is a high-precision Chinese and English OCR that can be installed and used immediately, can be deployed offline, and can be recognized without network. 
 
-Paddleocr DLL file is a C + + dynamic library modified from the C + + code of the open source project [PaddleOCR](https://github.com/paddlepaddle/PaddleOCR) and compiled based on x64 of OpenCV.
+Paddleocr DLL file is a C++ dynamic library modified from the C++ code of the open source project [PaddleOCR](https://github.com/paddlepaddle/PaddleOCR) and compiled based on x64 of OpenCV.
 
 This project can only be compiled and used on x64 CPU, so 32-bit is not supported.
 
-Linux platform is not supported for the time being. If there are cross platform requirements, please refer to systen Drawing. dll、Systen. Drawing. Common. DLL reference is deleted and recompiled.
+Linux platform is not supported for the time being. If there are cross platform requirements, please refer to System.Drawing.dll, System.Drawing.Common.dll reference is deleted and recompiled.
 
 The project currently supports the following net frameworks:
 
@@ -79,16 +79,16 @@ var imagebyte = File.ReadAllBytes(ofd.FileName);
 
 ```
 
- [C++Download address of prediction Library for windows](https://paddleinference.paddlepaddle.org.cn/user_guides/download_lib.html#windows)
+ [C++ Download address of prediction Library for windows](https://paddleinference.paddlepaddle.org.cn/user_guides/download_lib.html#windows)
 
 
 
 [All  parameters](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/PaddleOCRSharp/OCRParameter.cs)
 
-[PaddleOCR official  parameters]](https://gitee.com/paddlepaddle/PaddleOCR/tree/release/2.4/deploy/cpp_infer)
+[PaddleOCR official  parameters](https://gitee.com/paddlepaddle/PaddleOCR/tree/release/2.4/deploy/cpp_infer)
 
 
-## 2、Folder structure
+## 2. Folder structure
 
 ```
 
@@ -102,7 +102,7 @@ PaddleOCRDemo                //Demo folder
 
 ```
 
-## 3、Source code compilation
+## 3. Source code compilation
 
  **As for the source code compilation, it is recommended to use vs2022 version. If you cannot compile, please switch to release and then switch back to debug。** 
 
@@ -116,7 +116,7 @@ net5.0;net6.0;net7.0;
 </TargetFrameworks>
 ```
 
-## 4、.NET example
+## 4. .NET example
 
 ```
   OpenFileDialog ofd = new OpenFileDialog();
@@ -146,8 +146,8 @@ net5.0;net6.0;net7.0;
 [C++example code](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/PaddleOCRDemo/PaddleOCRCppDemo/PaddleOCRCppDemo.cpp)
 
 
-## 5、[Common problems and Solutions](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/doc/README_question_en.md)
+## 5. [Common problems and Solutions](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/doc/README_question_en.md)
 ---------------------------------------------------------------------------------------------------------------------
-### if you like it,starred it.
+### If you like it, starred it.
 
 ### QQ group：318860399    
