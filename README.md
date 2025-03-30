@@ -1,4 +1,4 @@
-### 简体中文 | [English](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/README_en.md)     |[更新记录](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/doc/README_update.md)
+### 简体中文 | [English](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/README_en.md)     |[更新记录](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/doc/README_update.md)
 
 
 #### 如果项目对你有用或者喜欢，那就点个赞&#9733; 。谢谢！
@@ -61,7 +61,7 @@ Demo                //该文件夹包含OCR示例Demo文件夹
  
 #### 2. .NET版编译
 
-[.NET版编译](https://gitee.com/raoyutian/paddleocrsharp/blob/master/doc/Csharp.md) 
+[.NET版编译](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/doc/Csharp.md) 
 
 
 ## 使用与部署
@@ -69,11 +69,11 @@ Demo                //该文件夹包含OCR示例Demo文件夹
 
 #### 1. [C++使用PaddleOCR](https://gitee.com/raoyutian/PaddleOCRSharp/tree/master/Demo/Cpp) 
 
-#### 2. [.NET使用PaddleOCRSharp](https://gitee.com/raoyutian/paddleocrsharp/blob/master/doc/UseInCsharp.md) 
+#### 2. [.NET使用PaddleOCRSharp](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/doc/UseInCsharp.md) 
 
-#### 3. [python使用PaddleOCR](https://gitee.com/raoyutian/paddleocrsharp/blob/master/Demo/python/PaddleOCRCppPython.py) 
+#### 3. [python使用PaddleOCR](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/Demo/python/PaddleOCRCppPython.py) 
 
-#### 4. [Go使用PaddleOCR](https://gitee.com/raoyutian/paddleocrsharp/blob/master/Demo/Go/PaddleOCRgo.go) 
+#### 4. [Go使用PaddleOCR](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/Demo/Go/PaddleOCRgo.go) 
 
 #### 5. [Rust使用PaddleOCR](https://gitee.com/toobo/PaddleOCRRust) 
 
@@ -85,12 +85,12 @@ OCR识别模型库支持官方所有的模型，也支持自己训练的模型�
 
 |模型名称|模型大小|下载地址|备注|
 |---|---|---|---|
-|ch_PP-OCRv2  |10M  |[中英文轻量v2](https://gitee.com/raoyutian/paddle-ocrsharp/raw/master/models/PP-OCRv2/inference.zip)  | |
-|en_PP-OCRv2  |4M   |[英文数字v2](https://gitee.com/raoyutian/paddle-ocrsharp/raw/master/models/PP-OCRv2/en.zip)  |  |
-|ch_PP-OCRv3  |12M  |[中英文轻量v3](https://gitee.com/raoyutian/paddle-ocrsharp/raw/master/models/PP-OCRv3/inference_v3.zip)|   |
-|en_PP-OCRv3  |10M  |[英文数字v3](https://gitee.com/raoyutian/paddle-ocrsharp/raw/master/models/PP-OCRv3/en_v3.zip)|   |
-|ch_PP-OCRv4  |14M  |[中英文轻量v4](https://gitee.com/raoyutian/paddle-ocrsharp/raw/master/models/PP-OCRv4/ch_PP-OCRv4.zip)|   |
-|en_PP-OCRv4  |12M  |[英文数字v4](https://gitee.com/raoyutian/paddle-ocrsharp/raw/master/models/PP-OCRv4/en_PP-OCRv4.zip)|   |
+|ch_PP-OCRv2  |10M  |[中英文轻量v2](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv2/inference.zip)  | |
+|en_PP-OCRv2  |4M   |[英文数字v2](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv2/en.zip)  |  |
+|ch_PP-OCRv3  |12M  |[中英文轻量v3](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv3/inference_v3.zip)|   |
+|en_PP-OCRv3  |10M  |[英文数字v3](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv3/en_v3.zip)|   |
+|ch_PP-OCRv4  |14M  |[中英文轻量v4](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv4/ch_PP-OCRv4.zip)|   |
+|en_PP-OCRv4  |12M  |[英文数字v4](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv4/en_PP-OCRv4.zip)|   |
 
 [更多PaddleOCR模型可以去飞桨官方下载](https://gitee.com/paddlepaddle/PaddleOCR/blob/dygraph/doc/doc_ch/models_list.md)
 
@@ -120,7 +120,7 @@ PaddleOCRSharp凭借其强大的OCR功能和广泛的应用场景，成为了.NE
 
 ## 常见问题与解决方案
 
-[常见问题与解决方案](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/doc/README_question.md)
+[常见问题与解决方案](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/doc/README_question.md)
 
 
 ##  技术交流方式
