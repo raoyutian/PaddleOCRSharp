@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PaddleOCRSharp": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

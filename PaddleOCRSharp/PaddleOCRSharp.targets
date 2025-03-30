@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <PackageReference Include="Paddle.Runtime.win_x64" Version="2.6.1.1" Publish="True" />
+  </ItemGroup>
+    <ItemGroup >
+      <None Include="$(MSBuildThisFileDirectory)\PaddleOCRLib\*.*">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <Visible>false</Visible>
+      </None>
+		<None Include="$(MSBuildThisFileDirectory)\PaddleOCRLib\inference\*.*">
+			<Link>inference\%(RecursiveDir)%(Filename)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+		</None>
+		<None Include="$(MSBuildThisFileDirectory)\PaddleOCRLib\inference\ch_ppocr_mobile_v2.0_cls_infer\*.*">
+			<Link>inference\ch_ppocr_mobile_v2.0_cls_infer\%(RecursiveDir)%(Filename)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+		</None>
+		<None Include="$(MSBuildThisFileDirectory)\PaddleOCRLib\inference\ch_PP-OCRv4_det_infer\*.*">
+			<Link>inference\ch_PP-OCRv4_det_infer\%(RecursiveDir)%(Filename)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+		</None>
+		<None Include="$(MSBuildThisFileDirectory)\PaddleOCRLib\inference\ch_PP-OCRv4_rec_infer\*.*">
+			<Link>inference\ch_PP-OCRv4_rec_infer\%(RecursiveDir)%(Filename)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+		</None>
+      
+    <None Include="$(MSBuildThisFileDirectory)\PaddleOCRLib\inference\ch_ppstructure_mobile_v2.0_SLANet_infer\*.*">
+        <Link>inference\ch_ppstructure_mobile_v2.0_SLANet_infer\%(RecursiveDir)%(Filename)%(Extension)</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+    </None>
+    </ItemGroup>
+    <PropertyGroup>
+      <BuildX86 Condition="'$(PlatformTarget)'=='x86' OR '$(Platform)'=='x86' OR ('$(Platform)'=='AnyCPU' AND '$(Prefer32Bit)'=='True' )">True</BuildX86>
+      <ErrorMessage Condition="'$(BuildX86)'=='True' "> PaddleOCRSharp不适用x86平台(32位),请修改目标平台</ErrorMessage>
+  </PropertyGroup>
+  
+    <Target Name="PackageBuildImports" BeforeTargets="PrepareForBuild">
+     <Error Text="'$(ErrorMessage)'" Condition="'$(ErrorMessage)'!=''" />
+ </Target>
+
+</Project>
