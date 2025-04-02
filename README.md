@@ -5,7 +5,7 @@
 
 ## 介绍
 -----
-   **PaddleOCRSharp** 是一个基于百度飞桨[PaddleOCR](https://github.com/paddlepaddle/PaddleOCR)的开源代码修改并优化的.NET版本OCR可离线使用类库。项目核心组件PaddleOCR.dll,由C++编写，根据百度飞桨[PaddleOCR](https://github.com/paddlepaddle/PaddleOCR)的C++代码修改并优化而成。目前已经支持C\C++、.NET、Python、Golang、Rust、java等众多开发语言的直接API接口调用。项目包含文本识别、文本检测、表格识别功能。本项目针对小图识别不准的情况下做了优化，同时做了其他优化，比飞桨原代码识别准确率有所提高，速度更快。包含总模型仅8.6M的超轻量级中文OCR，单模型支持中英文数字组合识别、竖排文本识别、长文本识别。同时支持中英文、纯英文以及多种语言文本检测识别。
+   **PaddleOCRSharp** 是一个.NET版本OCR可离线使用类库。项目核心组件PaddleOCR.dll目前已经支持C\C++、.NET、Python、Golang、Rust、java等众多开发语言的直接API接口调用。项目包含文本识别、文本检测、表格识别功能。本项目做了大量优化，提高了识别率和推理性能。包含总模型仅8.6M的超轻量级中文OCR，单模型支持中英文数字组合识别、竖排文本识别、长文本识别。同时支持中英文、纯英文以及多种语言文本检测识别。
 
 **PaddleOCRSharp**封装极其简化，实际调用仅几行代码，极大的方便了中下游开发者的使用和降低了PaddleOCR的使用入门级别，同时提供不同的.NET框架使用，方便各个行业应用开发与部署。Nuget包即装即用，可以离线部署，不需要网络就可以识别的高精度中英文OCR。  
 
@@ -91,8 +91,6 @@ OCR识别模型库支持官方所有的模型，也支持自己训练的模型�
 |en_PP-OCRv3  |10M  |[英文数字v3](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv3/en_v3.zip)|   |
 |ch_PP-OCRv4  |14M  |[中英文轻量v4](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv4/ch_PP-OCRv4.zip)|   |
 |en_PP-OCRv4  |12M  |[英文数字v4](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv4/en_PP-OCRv4.zip)|   |
-
-[更多PaddleOCR模型可以去飞桨官方下载](https://gitee.com/paddlepaddle/PaddleOCR/blob/dygraph/doc/doc_ch/models_list.md)
 
 
 ## PaddleOCRSharp适合哪些场景
