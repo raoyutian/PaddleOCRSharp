@@ -1,0 +1,3 @@
+D:/MyWorks/OpenSources/github/PaddleOCRSharp/Demo/Cpp/build/CMakeFiles/CppDemo.dir
+D:/MyWorks/OpenSources/github/PaddleOCRSharp/Demo/Cpp/build/CMakeFiles/edit_cache.dir
+D:/MyWorks/OpenSources/github/PaddleOCRSharp/Demo/Cpp/build/CMakeFiles/rebuild_cache.dir
