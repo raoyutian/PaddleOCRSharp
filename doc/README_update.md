@@ -3,11 +3,121 @@
 
 ###  （计划）
 
-1..支持多实例
+增加表格分类模块
+增加自动判断方向功能
 
-2.适配Paddle3.0推理框架
+###  v6.2.0(2026-6-12)
 
-3.适配新版模型
+
+1.适配最新发布的PPOCRV6模型，库自带PPOCRV6-tiny和PPOCRV6-small模型。文字识别和表格识别默认使用PPOCRV6-small模型
+
+2.优化性能。
+
+3.修复PaddleOCRSharp项目在linux下部分场景反序列化失败的问题。
+
+4.修复其他问题。
+
+
+###  v6.1.0(2026-2-9)
+
+v6.1.0正式版发布
+
+
+###  v6.1.0-beta(2026-1-17)
+***此版本是预发行版***
+
+1.免费社区版，永久免费使用。
+
+2.升级并优化Paddle3.3版本;
+
+3.为保持接口兼容性，所有底层接口保持与v5.1.0版本对齐（后续版本基本不对现有接口参数和类型更改，保持兼容性）;
+
+【文字识别初始化接口Initialize、Initializejson恢复 **keys** 参数；
+表格识别初始化接口StructureInitialize、StructureInitializejson恢复 **keys、table_char_dict_path** 参数；
+PaddleOCRSharp库中，OCRModelConfig类恢复 **keys** 属性,StructureModelConfig类恢复 **table_char_dict_path** 属性；】
+
+4.移除防破解不安全指令;
+
+5.移除上一版v6.0.2使用期限，永久免费;
+
+6.移除网页弹窗广告。
+
+7.移除文档校正模块
+
+
+###  v6.0.2(2026-1-5)
+
+1.增加免费到期弹窗提示。
+2.修复识别遇到错误没有返回具体Error的问题
+
+
+###  v6.0.0(2025-11-12)
+
+ **核心库PaddleOCR修改：** 
+
+升级Paddle依赖库版本到3.2.2，优化推理框架Paddle的一些问题，为Paddle推理库加上版本信息，以及修改底层库dll文件名，避免文件名冲突，并优化GPU版推理库；
+
+新增文档校正模块；
+
+表格模型默认采用新版表格识别模型；
+
+此版本开始不再支持旧版格式模型(.pdmodel)；
+
+文字识别初始化接口Initialize、Initializejson删除 **keys** 参数；
+
+表格识别初始化接口StructureInitialize、StructureInitializejson删除 **keys、table_char_dict_path** 参数；
+
+优化文字识别精度与性能，性能提升约10~20%。
+
+修复上一版内存问题。
+
+
+ **PaddleOCRSharp库修改：** 
+
+取消.NET3.5框架支持，新增.NET10.0支持；
+
+PaddleOCRSharp库中，OCRModelConfig类删除 **keys** 属性,StructureModelConfig类删除 **table_char_dict_path** 属性；
+
+
+
+###  v5.1.0（2025-07-01）
+
+- 升级Paddle3.1.0推理框架
+
+- 新增支持创建多个OCR引擎实例，可以在同一个进程使用不同的模型
+
+        engine1 = new PaddleOCREngine("中文模型配置");
+        engine2 = new PaddleOCREngine("法语模型配置");
+        engine3 = new PaddleOCREngine("英语模型配置");
+
+ - 新增接口 ** DetectText(IntPtr p_cvmat)** ，支持直接识别opencvSharp、Emgucv等C#的Mat
+
+- 新增PaddleOCRSharp.PDF扩展库用于识别PDF文件
+
+- 升级cls模型默认为PP-LCNet_x1_0_textline_ori_infer模型
+
+- 升级表格识别默认的文字识别检测模型为PP-OCRv5_mobile
+
+- 优化PaddleOCR.dll自动加载路径
+  
+        支持把非托管dll和模型文件夹同时放在任意一个子目录下。 
+        修复asp.net framework项目默认自动加载依赖找不到PaddeOCR问题。
+
+- 修复Paddle底层跨线程使用报错的问题
+
+- 修复Paddle底层在CPU版本win7下缺少依赖问题。
+
+- 修复其他已知问题。
+
+
+###  v5.0.0 （2025-05-21）
+
+
+1.适配Paddle3.0推理框架
+
+2.支持Paddle新版模型，兼容新旧版格式模型（旧版模型.pdmodel,新版模型.json）
+
+3.适配PPOCRv5模型、PPOCRv5server模型。V5模型字典增加到1.8万+，进一步提升文字识别精度，支持多文字类型识别和手写体识别
 
 
 ###  v4.5.0 （2025-03-21）
@@ -23,19 +133,6 @@
 5.增加linux版本CPU加速适配;
 
 6.修复det部分检测参数修改无效问题;
-
-
-1..NET库PaddleOCRSharp.dll增加图像内存指针接口，对于视频帧Mat、bmp等不用转BMP可以直传对象指针，减少对象转换与内存拷贝;
- python\C++\GO等语言直接调用 PaddleOCR.dll的不用更新，接口早已存在;
-
-2..NET库PaddleOCRSharp.dll增加.NET9.0框架支持;
-
-3.优化PaddleOCR推理性能，CPU与GPU性能均大幅提高70%以上，GPU版本提高70%~200%，相对上一版本;
-
-4.增加ARM架构的CPU版本支持;
-
-5.增加linux版本CPU加速适配。支持x86\ARM64CPU;
-
 
 
 ###  v4.4.0 （2024-08-13）

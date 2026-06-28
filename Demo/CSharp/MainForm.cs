@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PaddleOCRSharpDemo
@@ -38,38 +39,20 @@ namespace PaddleOCRSharpDemo
             if (!Directory.Exists(outpath))
             { Directory.CreateDirectory(outpath); }
 
-            //自带轻量版中英文模型V4模型
-             OCRModelConfig config = null;
+            //注意：免费社区版 PaddleOCRSharp自从v6.x.x版本开始，不再支持.pdmodel格式模型
 
-            //服务器中英文模型
-            // OCRModelConfig config = new OCRModelConfig();
-            //string root = PaddleOCRSharp.EngineBase.GetRootDirectory();
-            //string modelPathroot = root + @"\inferenceserver";
-            //config.det_infer = modelPathroot + @"\ch_ppocr_server_v2.0_det_infer";
-            //config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
-            //config.rec_infer = modelPathroot + @"\ch_ppocr_server_v2.0_rec_infer";
-            //config.keys = modelPathroot + @"\ppocr_keys.txt";
+            //默认V6_small模型
+            OCRModelConfig config = null;
 
-            //英文和数字模型V3
-            //OCRModelConfig config = new OCRModelConfig();
-            //string root = PaddleOCRSharp.EngineBase.GetRootDirectory();
-            //string modelPathroot = root + @"\en_v3";
-            //config.det_infer = modelPathroot + @"\en_PP-OCRv3_det_infer";
-            //config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
-            //config.rec_infer = modelPathroot + @"\en_PP-OCRv3_rec_infer";
-            //config.keys = modelPathroot + @"\en_dict.txt";
 
-            //中英文模型V3
+            //自定义模型路径,v5模型为例
             //config = new OCRModelConfig();
-            //string root = EngineBase.GetRootDirectory();
-            //string modelPathroot = root + @"\inference";
-            //config.det_infer = modelPathroot + @"\ch_PP-OCRv3_det_infer";
-            //config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
-            //config.rec_infer = modelPathroot + @"\ch_PP-OCRv3_rec_infer";
-            //config.keys = modelPathroot + @"\ppocr_keys.txt";
-
-
-
+            //string root = PaddleOCREngine.GetRootDirectory();
+            //string modelpath = Path.Combine(root, "inference");
+            //config.det_infer = Path.Combine(modelpath, "PP-OCRv5_mobile_det_infer");
+            //config.rec_infer = Path.Combine(modelpath, "PP-OCRv5_mobile_rec_infer");
+            //config.cls_infer = Path.Combine(modelpath, "PP-OCRv5_mobile_cls_infer");
+            //config.keys = Path.Combine(modelpath, "ppocr_keys.txt");
             //初始化OCR引擎
             engine = new PaddleOCREngine(config, "");
            
@@ -117,10 +100,16 @@ namespace PaddleOCRSharpDemo
                 richTextBox1.Show();
                 dataGridView1.Hide();
                 if (bmp == null) return;
-                dt1 = DateTime.Now;
-                OCRResult ocrResult = engine.DetectText(imagebyte);
-                dt2 = DateTime.Now;
-                ShowOCRResult(ocrResult);
+                Task.Run(() =>
+                {
+                    dt1 = DateTime.Now;
+                    OCRResult ocrResult = engine.DetectText(imagebyte);
+                    dt2 = DateTime.Now;
+                    this.BeginInvoke(new Action(() =>
+                    {
+                        ShowOCRResult(ocrResult);
+                    }));
+                });
 
             }
         }
@@ -154,11 +143,16 @@ namespace PaddleOCRSharpDemo
             dataGridView1.Hide();
             if (bmp == null) return;
 
-            dt1 = DateTime.Now;
-            OCRResult ocrResult = engine.DetectText(imagebyte);
-            dt2 = DateTime.Now;
-            ShowOCRResult(ocrResult);
-
+            Task.Run(() =>
+            {
+                dt1 = DateTime.Now;
+                OCRResult ocrResult = engine.DetectText(imagebyte);
+                dt2 = DateTime.Now;
+                this.BeginInvoke(new Action(() =>
+                {
+                    ShowOCRResult(ocrResult);
+                }));
+            });
         }
 
         /// <summary>
@@ -179,16 +173,16 @@ namespace PaddleOCRSharpDemo
             {
                 bmp = (Bitmap)screenCapturer.Image;
                 imageView1.Image = bmp;
-                try
+                Task.Run(() =>
                 {
                     dt1 = DateTime.Now;
                     OCRResult ocrResult = engine.DetectText(bmp);
                     dt2 = DateTime.Now;
-                    ShowOCRResult(ocrResult);
-                }
-                catch (Exception ex)
-                {
-                }
+                    this.BeginInvoke(new Action(() =>
+                    {
+                        ShowOCRResult(ocrResult);
+                    }));
+                });
 
             }
             this.Show();
@@ -203,19 +197,16 @@ namespace PaddleOCRSharpDemo
             bmp = GetClipboardImage();
 
             imageView1.Image = bmp;
-            
-                try
+            Task.Run(() =>
             {
                 dt1 = DateTime.Now;
                 OCRResult ocrResult = engine.DetectText(bmp);
                 dt2 = DateTime.Now;
-                ShowOCRResult(ocrResult);
-
-                }
-                catch (Exception ex)
+                this.BeginInvoke(new Action(() =>
                 {
-                }
-            
+                    ShowOCRResult(ocrResult);
+                }));
+            });
         }
         /// <summary>
         /// 本地文件表格
@@ -278,21 +269,10 @@ namespace PaddleOCRSharpDemo
             lastocrResult = ocrResult;
             richTextBox1.Clear();
             Bitmap bitmap = (Bitmap)this.imageView1.Image;
-
-            if (toolStripComboBox1.Text == "简单显示")
+           
+            foreach (var item in ocrResult.TextBlocks)
             {
-                foreach (var item in ocrResult.TextBlocks)
-                {
-                    richTextBox1.AppendText(item.Text + "\n");
-
-                }
-            }
-            else if (toolStripComboBox1.Text == "详细显示")
-            {
-                foreach (var item in ocrResult.TextBlocks)
-                {
-                    richTextBox1.AppendText(item.ToString() + "\n");
-                }
+               richTextBox1.AppendText(item.Text + "\n");
             }
 
             try

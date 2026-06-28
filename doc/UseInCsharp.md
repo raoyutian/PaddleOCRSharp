@@ -14,11 +14,11 @@
 
 |属性名称|类型|默认值|说明|
 |---|---|---|---|
-|use_gpu           |bool  |false | 是否使用GPU，免费版此属性无效|
-|gpu_id            |int   |false | GPU id，使用GPU时有效|
+|use_gpu           |bool  |false | 是否使用GPU，免费版此属性无效。GPU版本默认为true|
+|gpu_id            |int   |0 | GPU id，使用GPU时有效，windows下只能是0|
 |gpu_mem           |int   |4000  |申请的GPU内存|
 |cpu_math_library_num_threads         |int   |10    | CPU预测时的线程数，在机器核数充足的情况下，该值越大，预测速度越快|
-|enable_mkldnn     |bool  |true | 是否使用mkldnn库，即CPU加速|
+|enable_mkldnn     |bool  |true | 是否使用mkldnn库|
 |det               |bool  |true | 是否执行文字检测，单行文本可以关闭该参数来提高速度|
 |rec               |bool  |true | 是否执行文字识别|
 |cls               |bool  |false | 是否执行文字方向分类|
@@ -29,11 +29,11 @@
 |use_dilation      |bool  |false  | 是否在输出映射上使用膨胀|
 |det_db_score_mode |bool  |true | true:使用多边形框计算bbox score，false:使用矩形框计算。矩形框计算速度更快，多边形框对弯曲文本区域计算更准确|
 |visualize         |bool  |false | 是否对结果进行可视化，为true时，预测结果会在当前目录下保存一个ocr_vis.png文件。默认false|
-|use_angle_cls     |bool  |false | 是否使用方向分类器|
+|use_angle_cls     |bool  |false | 是否使用方向分类器,已弃用，以cls为准|
 |cls_thresh        |float |0.9 | 方向分类器的得分阈值|
 |cls_batch_num     |int   |1 | 方向分类器batchsize|
 |rec_batch_num     |int   |6 | 识别模型batchsize，适当调大，可以加快速度|
-|rec_img_h         |int   |48 | 识别模型输入图像高度，v2模型需要设置位32|
+|rec_img_h         |int   |48 | 识别模型输入图像高度，v2模型需要设置为32|
 |rec_img_w         |int   |320 | 识别模型输入图像宽度|
 |show_img_vis      |bool  |false | 是否显示预测结果|
 |use_tensorrt      |bool  |false | 使用GPU预测时，是否启动tensorrt，默认false|
@@ -86,15 +86,8 @@
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "*.*|*.bmp;*.jpg;*.jpeg;*.tiff;*.tiff;*.png";
             if (ofd.ShowDialog() != DialogResult.OK) return;
-            //使用默认中英文V4模型
-            PaddleOCRSharp.OCRModelConfig config = null;
-            //使用默认参数
-            PaddleOCRSharp. OCRParameter oCRParameter = new PaddleOCRSharp.OCRParameter();
-            //识别结果对象
-            PaddleOCRSharp.OCRResult ocrResult = new PaddleOCRSharp.OCRResult();
-            //建议程序全局初始化一次即可，不必每次识别都初始化，容易报错。     
-            PaddleOCRSharp.PaddleOCREngine engine = new PaddleOCRSharp.PaddleOCREngine(config, oCRParameter);
-            ocrResult = engine.DetectText(ofd.FileName);
+            //一行代码即可识别
+            PaddleOCRSharp.OCRResult ocrResult= new PaddleOCRSharp.PaddleOCREngine().DetectText(ofd.FileName);
             if (ocrResult != null) MessageBox.Show(ocrResult.Text, "识别结果");
 
 ```

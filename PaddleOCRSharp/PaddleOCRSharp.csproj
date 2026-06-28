@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>
-      net35;
       net40;
       net45;
       net461;
@@ -10,19 +9,21 @@
       netstandard2.0;
       net6.0;net7.0;net8.0;net9.0
     </TargetFrameworks>
-	   <PackageTags>OCR;Paddle;AI;CV;PaddleOCR;character recognition;NET;Csharp;YingTian</PackageTags>
+	   <PackageTags>OCR;Paddle;AI;CV;PaddleOCR;character recognition;NET;Csharp;raoyutian;</PackageTags>
 	  <IsPublishable>False</IsPublishable>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
 	  <Authors>raoyutian</Authors>
     <Copyright>Copyright (C) 2023 Guangzhou Yingtian Information Technology Co., Ltd</Copyright>
     <Company>广州英田信息科技有限公司</Company>
-	  <Description>This project is based on Baidu PaddleOCR, Including character recognition, text detection and table OCR recognition based on statistical analysis of text detection results. It can be used without network and has high recognition accuracy.</Description>
+	  <Description>包含文字识别、表格识别基础功能的功能工具类库，依赖第三方免费社区版PaddleOCR.dll.支持V4\V5\V6模型</Description>
     <PackageProjectUrl>https://github.com/raoyutian/PaddleOCRSharp</PackageProjectUrl>
     <RepositoryUrl>https://github.com/raoyutian/PaddleOCRSharp</RepositoryUrl>
-	  <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	  <AssemblyVersion>4.5.0.1</AssemblyVersion>
-	  <FileVersion>4.5.0.1</FileVersion>
-	  <Version>4.5.0.1</Version>
+	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+   
+	  <AssemblyVersion>6.2.0</AssemblyVersion>
+	  <FileVersion>6.2.0</FileVersion>
+	  <Version>6.2.0</Version>
 	  <Platforms>x64;AnyCPU;ARM64</Platforms>
     <PackageIcon>ico.png</PackageIcon>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -41,25 +42,24 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
-<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'  Or  '$(TargetFramework)' == 'net6.0'  Or '$(TargetFramework)' == 'net7.0'  Or '$(TargetFramework)' == 'net8.0'  Or '$(TargetFramework)' == 'net9.0'">
+<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'  Or  '$(TargetFramework)' == 'net6.0'  Or '$(TargetFramework)' == 'net7.0'  Or '$(TargetFramework)' == 'net8.0'  Or '$(TargetFramework)' == 'net9.0' Or '$(TargetFramework)' == 'net10.0'">
     <PackageReference Include="System.Drawing.Common">
       <Version>8.0.7</Version>
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0'  AND '$(TargetFramework)' != 'net7.0' AND  '$(TargetFramework)'!= 'net8.0' AND  '$(TargetFramework)'!= 'net9.0'">
+  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0'  AND '$(TargetFramework)' != 'net7.0' AND  '$(TargetFramework)'!= 'net8.0' AND  '$(TargetFramework)'!= 'net9.0' AND  '$(TargetFramework)'!= 'net10.0'">
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Paddle.Runtime.win_x64" Version="2.6.1.1" Publish="True" />
+    <PackageReference Include="Paddle.Runtime.win_x64" Version="3.3.0.1" Publish="True" />
   </ItemGroup>
-  
-  
+
   <ItemGroup>
-		 <None Include="$(SolutionDir)PaddleOCRSharp\PaddleOCRLib\**">
+		 <None Include="$(SolutionDir)PaddleOCRSharp\ytLib\**">
 			<Pack>true</Pack>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
-			<PackagePath>build\PaddleOCRLib</PackagePath>
+			<PackagePath>build\ytLib</PackagePath>
 		</None>
     <None Include=".\ico.png">
       <Pack>True</Pack>
@@ -73,11 +73,18 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <None Update="PaddleOCRLib\inference\PaddleOCRStructure.config.json">
-      <PackagePath>build\PaddleOCRLib</PackagePath>
+    <None Update="ytLib\inference\PaddleOCRStructure.config.json">
+      <PackagePath>build\ytLib</PackagePath>
       <PackageCopyToOutput>true</PackageCopyToOutput>
       <Pack>true</Pack>
     </None>
   </ItemGroup>
-  
+  <ItemGroup>
+    <!-- 方式1：单个许可文件 -->
+    <None Include="LICENSE">
+      <Pack>true</Pack>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 </Project>

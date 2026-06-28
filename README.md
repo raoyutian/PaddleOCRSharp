@@ -1,36 +1,39 @@
-### 简体中文 | [English](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/README_en.md)     |[更新记录](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/doc/README_update.md)
+## ⚠️ 重要免责声明 
 
+本开源仓库的核心代码（C#编写的调用/封装/扩展逻辑/示例）均为开源自由使用；仓库中所包含的其他第三方开源或者闭源的dll文件,其所有权、著作权、知识产权、商业授权许可、技术维护等全部归其原始开发方所有。
 
-#### 如果项目对你有用或者喜欢，那就点个赞&#9733; 。谢谢！
+1. 本仓库仅提供开源的C#代码适配与调用封装，**不拥有其他第三方开源或者闭源的dll文件的任何权利，不提供该DLL的授权许可**；
+2. 其他第三方开源或者闭源的dll文件的使用、分发、商业应用等行为，使用者可自行联系其权利人获取合法授权，**由此产生的一切法律责任、版权纠纷、商业风险均由使用者自行承担**，与本仓库及仓库作者无关；
+3. 本仓库的开源代码仅为技术学习与适配，不保证闭源DLL的功能完整性、稳定性及合规性，使用者下载、使用本仓库即代表知晓并同意本声明。
+
+[更新记录](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/doc/README_update.md)  | 如果项目对你有用或者喜欢，那就点个赞&#9733; 。谢谢！
 
 ## 介绍
------
-   **PaddleOCRSharp** 是一个.NET版本OCR可离线使用类库。项目核心组件PaddleOCR.dll目前已经支持C\C++、.NET、Python、Golang、Rust、java等众多开发语言的直接API接口调用。项目包含文本识别、文本检测、表格识别功能。本项目做了大量优化，提高了识别率和推理性能。包含总模型仅8.6M的超轻量级中文OCR，单模型支持中英文数字组合识别、竖排文本识别、长文本识别。同时支持中英文、纯英文以及多种语言文本检测识别。
+----
+   **PaddleOCRSharp** 是一个.NET版本OCR可离线使用类库。项目核心组件PaddleOCR.dll目前已经支持C\C++、.NET、Python、Golang、Rust、java、labview、delphi等众多开发语言的直接API接口调用。项目包含文本识别、文本检测、表格识别功能。本项目做了大量优化，提高了识别率和推理性能。包含总模型仅8.6M的超轻量级中文OCR，单模型支持中英文数字组合识别、竖排文本识别、长文本识别。同时支持中英文、纯英文以及多种语言文本检测识别。
 
 **PaddleOCRSharp**封装极其简化，实际调用仅几行代码，极大的方便了中下游开发者的使用和降低了PaddleOCR的使用入门级别，同时提供不同的.NET框架使用，方便各个行业应用开发与部署。Nuget包即装即用，可以离线部署，不需要网络就可以识别的高精度中英文OCR。  
 
-本项目支持官方所有公开的通用OCR模型，如：PPOCRV2、PPOCRV3、PPOCRV4、PP-OCRv4_server、PP-OCRv4_server_doc（1.5万字符字典模型）。最新版默认使用中英文V4模型（ch_PP-OCRv4）：
+本项目支持官方所有公开的通用OCR模型，如：PPOCRV2、PPOCRV3、PPOCRV4、PP-OCRv4_server、PP-OCRv4_server_doc（1.5万字符字典模型）。PP-OCRV5、PP-OCRv5_server、en_PP-OCRV5，PPOCR-V6,最新版默认使用V6模型PP-OCRv6-small：
 
-&#9733;windows系统支持:win7SP1、win10、win11、winserver2012R2、winserver2016、winserver2019、winserver2022等。免费版支持在x86的CPU上使用，CPU指令集需要包含AVX指令集。
+本项目从6.0版本，不只支持.pdmolde格式模型。
 
-&#9733;windows下版本有免费开源版、CPU加速版(付费版)、GPU加速版(付费版)
-
-&#9733;linux系统支持(付费版)：统信UOS、麒麟、ubuntu、CentOS8等绿色离线部署，支持docker部署。支持国产CPU如华为鲲鹏、飞腾、海光、兆芯等CPU。
+&#9733;windows系统支持:win7SP1_x64、win10_x64及以上、winserver2012R2_x64及以上。CPU指令集需要包含AVX2指令集。
 
 本项目目前支持以下.NET框架（linux版本仅支持net6.0及以上框架）：
 
 ```
-net35;net40;net45;net451;net452;net46;net461;net462;net47;net471;net472;net48;net481;
-netstandard2.0;netcoreapp3.1;
-net5.0;net6.0;net7.0;net8.0;net9.0
+net40;net45;net451;net452;net46;net461;net462;net47;net471;net472;net48;net481;
+netstandard2.0;
+net6.0;net7.0;net8.0;net9.0;net10.0
 
 ```
 
 ## 特点
 
-&#9733; $\color{#0000FF}{高度集成}$：**PaddleOCRSharp**将百度飞桨PaddleOCR的核心功能完美集成到.NET平台，让开发者无需关心底层实现，只需调用相应接口即可实现OCR功能。
+&#9733; $\color{#0000FF}{高度集成}$：**PaddleOCRSharp**将OCR的核心功能完美集成到.NET平台，让开发者无需关心底层实现，只需调用相应接口即可实现OCR功能。
 
-&#9733; $\color{#0000FF}{性能卓越}$：得益于百度飞桨PaddleOCR的高效算法和对PaddleOCR代码的部分算法优化，**PaddleOCRSharp**在保持高度集成的同时，也保证了卓越的性能表现。
+&#9733; $\color{#0000FF}{性能卓越}$：核心代码全部采用C++编译，并进行高度优化，**PaddleOCRSharp**在保持高度集成的同时，也保证了卓越的性能表现。
 
 &#9733; $\color{#0000FF}{易于使用}$：**PaddleOCRSharp**提供了丰富的API接口和详细的文档说明，让开发者能够轻松上手，快速实现OCR功能。
 
@@ -43,55 +46,16 @@ net5.0;net6.0;net7.0;net8.0;net9.0
 
 ## 如何使用
 
-本项目提供了两个SDK，一个是C++版本，一个是.net版本，.net版本是对C++版本的二次封装，其他语言开发亦是调用C++版本。同时也提供了Go、Python、C++的调用示例代码
+[.NET使用PaddleOCRSharp](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/doc/UseInCsharp.md)
 
-[博客园文章：NET框架下如何使用PaddleOCRSharp](https://www.cnblogs.com/raoyutian/p/15912470.html)
+[博客园文章：.NET框架下如何使用PaddleOCRSharp](https://www.cnblogs.com/raoyutian/p/15912470.html)
 
-#### 1.文件夹结构
-
-```
-PaddleOCRSharp      //该文件夹包含.NET对PaddleOCR封装类库项目
-Demo                //该文件夹包含OCR示例Demo文件夹
-|--Cpp              //C++调用示例项目
-|--CSharp           //.NET调用示例项目
-|--python           //python调用示例项目
-|--Go               //Golang调用示例项目
-|--win_runtime_x64  // windows平台全部依赖文件
-```
- 
-#### 2. .NET版编译
-
-[.NET版编译](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/doc/Csharp.md) 
+[具体使用示例参考](https://gitee.com/raoyutian/PaddleOCRSharpDemo)
 
 
-## 使用与部署
-------
+## 第三方组件链接
 
-#### 1. [C++使用PaddleOCR](https://gitee.com/raoyutian/PaddleOCRSharp/tree/master/Demo/Cpp) 
-
-#### 2. [.NET使用PaddleOCRSharp](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/doc/UseInCsharp.md) 
-
-#### 3. [python使用PaddleOCR](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/Demo/python/PaddleOCRCppPython.py) 
-
-#### 4. [Go使用PaddleOCR](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/Demo/Go/PaddleOCRgo.go) 
-
-#### 5. [Rust使用PaddleOCR](https://gitee.com/toobo/PaddleOCRRust) 
-
-
-## OCR模型
-------
-OCR识别模型库支持官方所有的模型，也支持自己训练的模型。完全按照飞桨OCR接口搭桥。
-本项目部署自带的一种轻量版8.6M模型库、服务器版模型库（更准确，需要自行下载），可以自行更改模型库适用实际需求。
-
-|模型名称|模型大小|下载地址|备注|
-|---|---|---|---|
-|ch_PP-OCRv2  |10M  |[中英文轻量v2](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv2/inference.zip)  | |
-|en_PP-OCRv2  |4M   |[英文数字v2](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv2/en.zip)  |  |
-|ch_PP-OCRv3  |12M  |[中英文轻量v3](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv3/inference_v3.zip)|   |
-|en_PP-OCRv3  |10M  |[英文数字v3](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv3/en_v3.zip)|   |
-|ch_PP-OCRv4  |14M  |[中英文轻量v4](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv4/ch_PP-OCRv4.zip)|   |
-|en_PP-OCRv4  |12M  |[英文数字v4](https://gitee.com/raoyutian/PaddleOCRSharp/raw/master/models/PP-OCRv4/en_PP-OCRv4.zip)|   |
-
+[第三方PaddleOCR组件链接](https://www.yingtianit.com/)
 
 ## PaddleOCRSharp适合哪些场景
 
@@ -124,14 +88,8 @@ PaddleOCRSharp凭借其强大的OCR功能和广泛的应用场景，成为了.NE
 ##  技术交流方式
 ------
 #### QQ技术交流群：318860399
-#### 微信公众号：明月心技术学堂。
-![输入图片说明](doc/%E5%85%AC%E4%BC%97%E5%8F%B7%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg)
-![输入图片说明](doc/%E6%98%8E%E6%9C%88%E5%BF%83%E6%8A%80%E6%9C%AF%E5%AD%A6%E5%A0%82%E7%BE%A4%E8%81%8A%E4%BA%8C%E7%BB%B4%E7%A0%81.png)
+
 #### [个人博客地址： https://www.cnblogs.com/raoyutian/]( https://www.cnblogs.com/raoyutian/)
 -----
 #### 定制开发联系QQ：277784829
 -----
-
------
-###  如果您在工作中受益于该项目，请考虑下支持我的工作。
-![输入图片说明](doc/%E8%B5%9E%E8%B5%8F%E7%A0%81.jpg)

@@ -21,33 +21,33 @@ namespace PaddleOCRSharp
     /// <summary>
     /// PaddleOCR表格识别引擎对象
     /// </summary>
-    public  class PaddleStructureEngine:EngineBase
+    public class PaddleStructureEngine : EngineBase
     {
         #region PaddleOCR API
-       
+
         [DllImport(dllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
         internal static extern bool StructureInitialize(string det_infer, string rec_infer, string keys, string table_model_dir, string table_char_dict_path, StructureParameter parameter);
         [DllImport(dllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
         internal static extern bool StructureInitializejson(string det_infer, string rec_infer, string keys, string table_model_dir, string table_char_dict_path, string parameter);
 
         [DllImport(dllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-        internal static extern IntPtr GetStructureDetectFile(  string imagefile);
-       
-        [DllImport(dllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-        internal static extern IntPtr GetStructureDetectByte(  byte[] imagebytedata, long size);
+        internal static extern IntPtr GetStructureDetectFile(string imagefile);
 
         [DllImport(dllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-        internal static extern IntPtr GetStructureDetectBase64( string imagebase64);
-       
+        internal static extern IntPtr GetStructureDetectByte(byte[] imagebytedata, long size);
+
         [DllImport(dllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-        internal static extern void FreeStructureEngine( );
+        internal static extern IntPtr GetStructureDetectBase64(string imagebase64);
+
+        [DllImport(dllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+        internal static extern void FreeStructureEngine();
         #endregion
 
         /// <summary>
         /// PaddleStructureEngine识别引擎对象初始化
         /// </summary>
-        public PaddleStructureEngine() : this(null,new StructureParameter())
-        {  
+        public PaddleStructureEngine() : this(null, new StructureParameter())
+        {
         }
         /// <summary>
         /// PaddleStructureEngine识别引擎对象初始化
@@ -64,12 +64,9 @@ namespace PaddleOCRSharp
         public PaddleStructureEngine(StructureModelConfig config, StructureParameter parameter) : base()
         {
             if (parameter == null) parameter = new StructureParameter();
-            if (config == null)
-            {
-                string root = GetRootDirectory();
-                config = GetDefaultConfig(root);
-            }
-             bool sucess =  StructureInitialize(config.det_infer,  config.rec_infer, config.keys, config.table_model_dir, config.table_char_dict_path, parameter);
+            if (config == null) config= StructureModelConfig.Default;
+             
+            bool sucess = StructureInitialize(config.det_infer, config.rec_infer, config.keys, config.table_model_dir, config.table_char_dict_path, parameter);
             if (!sucess) throw new Exception("Initialize err:" + GetLastError());
         }
         /// <summary>
@@ -79,52 +76,19 @@ namespace PaddleOCRSharp
         /// <param name="parameterjson">识别参数Json格式，为空均按缺省值</param>
         public PaddleStructureEngine(StructureModelConfig config, string parameterjson) : base()
         {
-            if (config == null)
-            {
-                string root = GetRootDirectory();
-                config = GetDefaultConfig(root);
-            }
+            if (config == null) config = StructureModelConfig.Default;
             if (string.IsNullOrEmpty(parameterjson))
             {
                 parameterjson = GetRootDirectory();
-#if NET35
-                parameterjson += @"\inference\PaddleOCRStructure.config.json";
-#else
-                parameterjson =Path.Combine( parameterjson ,"inference","PaddleOCRStructure.config.json");    
-#endif
+
+                parameterjson = Path.Combine(Path.Combine(parameterjson, "inference"), "PaddleOCRStructure.config.json");
+
                 if (!File.Exists(parameterjson)) throw new FileNotFoundException(parameterjson);
                 parameterjson = File.ReadAllText(parameterjson);
             }
-            bool sucess =  StructureInitializejson(config.det_infer, config.rec_infer, config.keys, config.table_model_dir, config.table_char_dict_path, parameterjson);
+            bool sucess = StructureInitializejson(config.det_infer, config.rec_infer, config.keys, config.table_model_dir, config.table_char_dict_path, parameterjson);
             if (!sucess) throw new Exception("Initialize err:" + GetLastError());
         }
-
-
-        /// <summary>
-        /// 获取缺省配置
-        /// </summary>
-        /// <param name="rootpath">根目录</param>
-        private StructureModelConfig GetDefaultConfig(string rootpath)
-        {
-            StructureModelConfig config = new StructureModelConfig();
-#if NET35
-            string modelPathroot = rootpath + @"/inference";
-            config.det_infer = modelPathroot + @"/ch_PP-OCRv4_det_infer";
-            config.rec_infer = modelPathroot + @"/ch_PP-OCRv4_rec_infer";
-            config.keys = modelPathroot + @"/ppocr_keys.txt";
-            config.table_model_dir = modelPathroot + @"/ch_ppstructure_mobile_v2.0_SLANet_infer";
-            config.table_char_dict_path = modelPathroot + @"/table_structure_dict_ch.txt";
-#else
-                string modelPathroot =Path.Combine( rootpath ,"inference");
-                config.det_infer = Path.Combine(modelPathroot,"ch_PP-OCRv4_det_infer");
-                config.rec_infer = Path.Combine(modelPathroot , "ch_PP-OCRv4_rec_infer");
-                config.keys = Path.Combine(modelPathroot , "ppocr_keys.txt");
-                config.table_model_dir = Path.Combine(modelPathroot,"ch_ppstructure_mobile_v2.0_SLANet_infer");
-                config.table_char_dict_path = Path.Combine(modelPathroot,"table_structure_dict_ch.txt");
-#endif
-            return config;
-        }
-
 
         /// <summary>
         /// 对图像文件进行表格文本识别
@@ -134,7 +98,7 @@ namespace PaddleOCRSharp
         public string StructureDetectFile(string imagefile)
         {
             if (!System.IO.File.Exists(imagefile)) throw new Exception($"文件{imagefile}不存在");
-            IntPtr presult =  GetStructureDetectFile( imagefile);
+            IntPtr presult = GetStructureDetectFile(imagefile);
             return ConvertResult(presult);
         }
 
@@ -159,8 +123,8 @@ namespace PaddleOCRSharp
         /// <returns>表格识别结果</returns>
         public string StructureDetect(byte[] imagebyte)
         {
-           if (imagebyte == null) throw new ArgumentNullException("imagebyte");
-            IntPtr presult=  GetStructureDetectByte(imagebyte, imagebyte.LongLength);
+            if (imagebyte == null) throw new ArgumentNullException("imagebyte");
+            IntPtr presult = GetStructureDetectByte(imagebyte, imagebyte.LongLength);
             return ConvertResult(presult);
         }
         /// <summary>
@@ -171,9 +135,9 @@ namespace PaddleOCRSharp
         public string StructureDetectBase64(string imagebase64)
         {
             if (imagebase64 == null || imagebase64 == "") throw new ArgumentNullException("imagebase64");
-            IntPtr presult= GetStructureDetectBase64( imagebase64);
+            IntPtr presult = GetStructureDetectBase64(imagebase64);
             return ConvertResult(presult);
-           
+
         }
 
         /// <summary>
@@ -203,12 +167,11 @@ namespace PaddleOCRSharp
                    而Marshal.PtrToStringUTF8不支持所有.net框架，OCR结果可能含有中文，因此
                    Windows下用 Marshal.PtrToStringUni，linux下用 Marshal.PtrToStringAnsi解析
                 */
-                 result = Marshal.PtrToStringUni(ptrResult);
+                result = Marshal.PtrToStringUni(ptrResult);
 #if NET6_0_OR_GREATER
   if (!OperatingSystem.IsWindows())
   {
   result = Marshal.PtrToStringAnsi(ptrResult);
-  //result=result.Replace("\\r","");
   }
 #endif    
             }
@@ -228,7 +191,7 @@ namespace PaddleOCRSharp
         /// <summary>
         /// 释放对象
         /// </summary>
-        public override void Dispose()
+        public void Dispose()
         {
             FreeStructureEngine();
         }

@@ -18,22 +18,81 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace PaddleOCRSharp
 {
     /// <summary>
     /// 引擎对象基类
     /// </summary>
-    public abstract class EngineBase 
+    public abstract class EngineBase
     {
+        #region DllImport
+        /// <summary>
+        /// 非托管推理引擎实例内存地址
+        /// </summary>
+        internal ulong enginePtr { get; set; }
         /// <summary>
         /// PaddleOCR.dll自定义加载路径，默认为空，如果指定则需在引擎实例化前赋值。
         /// </summary>
         public static string PaddleOCRdllPath { get; set; }
         internal const string dllName = "PaddleOCR";
-    
+
         [DllImport(dllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
         internal static extern IntPtr GetError();
+
+        [DllImport(dllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+        internal static extern void libaddLicense(string lic);
+
+     
+        #endregion
+
+        #region public
+
+        /// <summary>
+        /// 添加授权文件,免费版无需关注
+        /// </summary>
+        /// <param name="lic">授权文件</param>
+        public static void AddLicense(string lic)
+        {
+            libaddLicense(lic);
+        }
+        /// <summary>
+        /// 获取程序的当前路径;
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRootDirectory()
+        {
+            //如果指定路径，全部按照指定路径
+            if (!string.IsNullOrEmpty(PaddleOCRdllPath)) return PaddleOCRdllPath;
+            
+            List<string> paths = new List<string>();
+            string path1 = AppDomain.CurrentDomain.BaseDirectory;
+#if NET461_OR_GREATER || NETCOREAPP || NET6_0_OR_GREATER
+            path1 = AppContext.BaseDirectory;
+#endif
+            string path2 = Path.GetDirectoryName(typeof(EngineBase).Assembly.Location);
+            if(!string.IsNullOrEmpty(path1))
+            {
+                paths.Add(path1);
+                paths.AddRange(Directory.GetDirectories(path1, "*").ToList());
+            }
+            if (!string.IsNullOrEmpty(path2))
+            {
+                paths.Add(path2);
+                paths.AddRange(Directory.GetDirectories(path2, "*").ToList());
+            }
+            foreach (string path in paths)
+            {
+                if(string.IsNullOrEmpty(path)) continue;
+                
+                if (File.Exists(Path.Combine(path, dllName + ".dll")))
+                {
+                    return path;
+                }
+            }
+            return path1;
+        }
 
         /// <summary>
         /// 初始化
@@ -45,83 +104,42 @@ namespace PaddleOCRSharp
             try
             {
 #if NET6_0_OR_GREATER
-  if (OperatingSystem.IsWindows())
-  {
-   if (string.IsNullOrEmpty(PaddleOCRdllPath))
-                {
-                    PaddleOCRdllPath = GetDllDirectory();
-                }
-                   if (!string.IsNullOrEmpty(PaddleOCRdllPath) && GetRootDirectory().TrimEnd('\\').ToLower()!= PaddleOCRdllPath.TrimEnd('\\').ToLower())
-                {
-                    string Envpath = Environment.GetEnvironmentVariable("path", EnvironmentVariableTarget.Process);
-                     if (!string.IsNullOrEmpty(Envpath) && !Envpath.EndsWith(PaddleOCRdllPath))
-                    {
-                        Environment.SetEnvironmentVariable("path", Envpath + ";" + PaddleOCRdllPath, EnvironmentVariableTarget.Process);
-                    }
-                }
-  }
+             if(OperatingSystem.IsWindows())
+             {
+                SetEnvironment();
+             }
 #else
-
-                if (string.IsNullOrEmpty(PaddleOCRdllPath))
-                {
-                    PaddleOCRdllPath = GetDllDirectory();
-                }
-                if (!string.IsNullOrEmpty(PaddleOCRdllPath) && GetRootDirectory().TrimEnd('\\').ToLower()!= PaddleOCRdllPath.TrimEnd('\\').ToLower())
-                {
-                    string Envpath = Environment.GetEnvironmentVariable("path", EnvironmentVariableTarget.Process);
-                    if (!string.IsNullOrEmpty(Envpath) && !Envpath.EndsWith(PaddleOCRdllPath))
-                    {
-                        Environment.SetEnvironmentVariable("path", Envpath + ";" + PaddleOCRdllPath, EnvironmentVariableTarget.Process);
-                    }
-                }
+                SetEnvironment();
 #endif
             }
             catch (Exception e)
             {
-                throw new Exception("设置自定义加载路径失败。" + e.Message);
+                throw new FileLoadException($" Load the library [{dllName}] fail.\n{e.Message}");
             }
         }
+        #endregion
+
         #region private
+
         /// <summary>
-        /// 获取程序的当前路径;
+        /// 设置自动加载dll路径;
         /// </summary>
         /// <returns></returns>
-        private static string GetDllDirectory()
+        private static void SetEnvironment()
         {
-            string root = GetRootDirectory();
-#if NET6_0_OR_GREATER
-  if (OperatingSystem.IsWindows())
-  {
-   var fileinfos = new DirectoryInfo(root).GetFiles(dllName+".dll", SearchOption.AllDirectories);
-            if (fileinfos != null && fileinfos.Length > 0)
+            if (string.IsNullOrEmpty(PaddleOCRdllPath))
             {
-                root = fileinfos.First().DirectoryName;
+                PaddleOCRdllPath = GetRootDirectory();
             }
-  }
-#else
-
-            var fileinfos = new DirectoryInfo(root).GetFiles(dllName+".dll", SearchOption.AllDirectories);
-            if (fileinfos != null && fileinfos.Length > 0)
+            if (!string.IsNullOrEmpty(PaddleOCRdllPath))
             {
-                root = fileinfos.First().DirectoryName;
+                string Envpath = Environment.GetEnvironmentVariable("path", EnvironmentVariableTarget.Process);
+                if (!string.IsNullOrEmpty(Envpath) && !Envpath.EndsWith(PaddleOCRdllPath))
+                {
+                    Environment.SetEnvironmentVariable("path", Envpath + ";" + PaddleOCRdllPath, EnvironmentVariableTarget.Process);
+                }
             }
-#endif
-
-            return root;
         }
-        /// <summary>
-        /// 获取程序的当前路径;
-        /// </summary>
-        /// <returns></returns>
-        public static string GetRootDirectory()
-        {
-            string root = AppDomain.CurrentDomain.BaseDirectory;
-#if NET461_OR_GREATER || NETCOREAPP || NET6_0_OR_GREATER
-            root = AppContext.BaseDirectory;
-#endif
-            return root;
-        }
-
         /// <summary>
         /// Convert Image to Byte[]
         /// </summary>
@@ -163,18 +181,11 @@ namespace PaddleOCRSharp
             }
         }
 
-        #endregion
-        /// <summary>
-        /// 释放内存
-        /// </summary>
-        public virtual void Dispose()
-        {
-        }
         /// <summary>
         /// 获取底层错误信息
         /// </summary>
         /// <returns></returns>
-        public virtual string GetLastError()
+        internal virtual string GetLastError()
         {
             string err = "";
             try
@@ -192,6 +203,14 @@ namespace PaddleOCRSharp
             }
             return err;
         }
-
+        /// <summary>
+        /// 检测指针是否为0
+        /// </summary>
+        /// <returns></returns>
+        internal void ZeroThrow(ulong enginePtr)
+        {
+            if (enginePtr == 0) throw new Exception("Please create an engine object first");
+        }
+#endregion
     }
 }
