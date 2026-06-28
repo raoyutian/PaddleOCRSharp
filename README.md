@@ -6,7 +6,7 @@
 2. 其他第三方开源或者闭源的dll文件的使用、分发、商业应用等行为，使用者可自行联系其权利人获取合法授权，**由此产生的一切法律责任、版权纠纷、商业风险均由使用者自行承担**，与本仓库及仓库作者无关；
 3. 本仓库的开源代码仅为技术学习与适配，不保证闭源DLL的功能完整性、稳定性及合规性，使用者下载、使用本仓库即代表知晓并同意本声明。
 
-[更新记录](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/doc/README_update.md)  | 如果项目对你有用或者喜欢，那就点个赞&#9733; 。谢谢！
+[更新记录](https://github.com/raoyutian/PaddleOCRSharp/blob/master/doc/README_update.md)  | 如果项目对你有用或者喜欢，那就点个赞&#9733; 。谢谢！
 
 ## 介绍
 ----
@@ -46,12 +46,11 @@ net6.0;net7.0;net8.0;net9.0;net10.0
 
 ## 如何使用
 
-[.NET使用PaddleOCRSharp](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/doc/UseInCsharp.md)
+[.NET使用PaddleOCRSharp](https://github.com/raoyutian/PaddleOCRSharp/blob/master/doc/UseInCsharp.md)
 
 [博客园文章：.NET框架下如何使用PaddleOCRSharp](https://www.cnblogs.com/raoyutian/p/15912470.html)
 
-[具体使用示例参考](https://gitee.com/raoyutian/PaddleOCRSharpDemo)
-
+ 
 
 ## 第三方组件链接
 
@@ -82,7 +81,7 @@ PaddleOCRSharp凭借其强大的OCR功能和广泛的应用场景，成为了.NE
 
 ## 常见问题与解决方案
 
-[常见问题与解决方案](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/doc/README_question.md)
+[常见问题与解决方案](https://github.com/raoyutian/PaddleOCRSharp/blob/master/doc/README_question.md)
 
 
 ##  技术交流方式
