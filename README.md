@@ -38,12 +38,11 @@ net6.0;net7.0;net8.0;net9.0;net10.0
 
 ## 如何使用
 
-[.NET使用PaddleOCRSharp](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/doc/UseInCsharp.md)
+[.NET使用PaddleOCRSharp](https://github.com/raoyutian/PaddleOCRSharp/blob/master/doc/UseInCsharp.md)
 
 [博客园文章：.NET框架下如何使用PaddleOCRSharp](https://www.cnblogs.com/raoyutian/p/15912470.html)
 
-[具体使用示例参考](https://gitee.com/raoyutian/PaddleOCRSharpDemo)
-
+ 
 
 ## 第三方组件链接
 
@@ -74,7 +73,7 @@ PaddleOCRSharp凭借其强大的OCR功能和广泛的应用场景，成为了.NE
 
 ## 常见问题与解决方案
 
-[常见问题与解决方案](https://gitee.com/raoyutian/PaddleOCRSharp/blob/master/doc/README_question.md)
+[常见问题与解决方案](https://github.com/raoyutian/PaddleOCRSharp/blob/master/doc/README_question.md)
 
 
 ##  技术交流方式
